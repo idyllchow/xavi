@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- <block wx:for="{{menuContent}}" wx:for-item="item">
+    <view id="{{index}}" class="cellview" bindtap="selectedFood">
+      <image class="foodimage" mode="scaleToFill" src="{{item.image}}"/>
+      <view class="foodlabel">
+      <text class="foodname">{{item.name}}</text>  
+      <text class="fooddesc">{{item.desc}}</text> 
+      <text class="foodprice">{{item.price}}</text>
+      </view>
+      <image class='addicon' src="/images/ic_add_circle_outline_black_24dp.png" />    
+    </view>
+  </block> -->
+
+  <view class="index">
+    <view class="index-left">
+      <scroll-view scroll-with-animation="true" scroll-y style="height:100vh;" scroll-top="{{leftToTop}}">
+        <view wx:for="{{constants}}" wx:key="id" bindtap="jumpTo" data-id="{{item.id}}" style="background: {{item.id === currentLeftSelect ? 'white' : ''}}" class="index-left-text">
+          <view id="{{item.id}}">
+            {{item.name}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="index-right">
+      <scroll-view scroll-with-animation="true" scroll-y style="height: 100vh;" bindscroll="rightScroll" scroll-into-view="{{toView}}" bindscrolltolower="lower">
+        <view wx:for="{{constants}}" wx:key="id" id="{{item.id}}" wx:for-index="parentindex">
+          <view class="index-right-text-top">{{item.name}}</view>
+          <view class="index-right-cell" bindtap='jumpToDetail' wx:for="{{item.category}}" wx:key="category_id" wx:for-index="childindex">
+            <!-- <view class="index-right-text" wx:for="{{item.category}}" wx:key="category_id">
+            {{item.category_name}}
+          </view> -->
+            <image class="food-image" mode="scaleToFill" src="{{item.image}}" />
+            <view class="food-desc">
+              <text class="food-name">{{item.name}}</text>
+              <text class="food-label">{{item.desc}}</text>
+              <text class="food-price">¥{{item.price}}</text>
+            </view>
+            <view class='change-action'>
+              <block wx:if="{{item.change_num > 0}}">
+                <image class='remove-icon' data-parentindex='{{parentindex}}' data-childindex='{{childindex}}' data-category-id='{{item.category_id}}' bindtap='removeFood' src="/images/ic_remove_circle_outline_blue_24dp.png" />
+                <text ecode="{{true}}" space="{{true}}" class='change-num'>{{item.change_num}}</text>
+              </block>
+              <image class='add-icon' data-parentindex='{{parentindex}}' data-childindex='{{childindex}}' data-category-id='{{item.category_id}}' bindtap='addFood' src="/images/ic_add_circle_outline_blue_24dp.png" />
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+
+
+  </view>
+  <view class='bottom-box'>
+    <view class='selected-label' bindtap='showShoppingCart'>
+      <image class='shopping-cart' src='../../images/ic_add_shopping_cart_black_24dp.png'>
+
+      </image>
+      <text class='total-num'>{{totalNum}}</text>
+      <text class='total-price'>¥{{totalPrice}}</text>
+    </view>
+    <!-- <text class='total-price'></text> -->
+    <text class='submit' bindtap='submitBill'>下单</text>
+  </view>
+</view>
